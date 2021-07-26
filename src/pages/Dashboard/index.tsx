@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import CartBar from '../../components/CartBar';
 
 import { Container } from './styles';
 
 const Dashboard: React.FC = () => {
 	return (
 		<Container>
-			<Text>Dashboard</Text>
+			<CartBar />
 		</Container>
 	);
 };
