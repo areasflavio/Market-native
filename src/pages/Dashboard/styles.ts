@@ -31,6 +31,7 @@ export const ProductsList = styled(
 	flex: 1;
 	padding: 0 10px;
 `;
+
 export const ProductCard = styled.View`
 	flex: 1;
 
@@ -43,8 +44,8 @@ export const ProductCard = styled.View`
 
 export const ProductImage = styled.Image`
 	align-self: center;
-	height: 122px;
-	width: 122px;
+	height: 120px;
+	width: 100%;
 `;
 
 export const ProductTitle = styled.Text`
