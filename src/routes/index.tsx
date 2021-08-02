@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import Dashboard from '../pages/Dashboard';
@@ -12,41 +11,39 @@ const AppNavigation = createStackNavigator();
 
 const Routes: React.FC = () => {
 	return (
-		<NavigationContainer>
-			<AppNavigation.Navigator
-				screenOptions={{
+		<AppNavigation.Navigator
+			screenOptions={{
+				headerShown: true,
+				cardStyle: { backgroundColor: '#EFF7FF' },
+				headerTitleAlign: 'center',
+			}}
+			initialRouteName="Dashboard"
+		>
+			<AppNavigation.Screen
+				options={{
 					headerShown: true,
-					cardStyle: { backgroundColor: '#EFF7FF' },
-					headerTitleAlign: 'center',
+					headerTransparent: true,
+					headerTitle: () => <Header />,
 				}}
-				initialRouteName="Dashboard"
-			>
-				<AppNavigation.Screen
-					options={{
-						headerShown: true,
-						headerTransparent: true,
-						headerTitle: () => <Header />,
-					}}
-					name="Dashboard"
-					component={Dashboard}
-				/>
-				<AppNavigation.Screen
-					options={{
-						headerTransparent: true,
-						headerTitle: () => <Header />,
-						headerBackTitleVisible: false,
-						headerLeftContainerStyle: {
-							marginLeft: 20,
-						},
-						headerBackImage: () => (
-							<FeatherIcon name="chevron-left" size={24} color="#1e90ff" />
-						),
-					}}
-					name="Cart"
-					component={Cart}
-				/>
-			</AppNavigation.Navigator>
-		</NavigationContainer>
+				name="Dashboard"
+				component={Dashboard}
+			/>
+			<AppNavigation.Screen
+				options={{
+					headerTransparent: true,
+					headerTitle: () => <Header />,
+					headerBackTitleVisible: false,
+					headerLeftContainerStyle: {
+						marginLeft: 20,
+					},
+					headerBackImage: () => (
+						<FeatherIcon name="chevron-left" size={24} color="#1e90ff" />
+					),
+				}}
+				name="Cart"
+				component={Cart}
+			/>
+		</AppNavigation.Navigator>
 	);
 };
 

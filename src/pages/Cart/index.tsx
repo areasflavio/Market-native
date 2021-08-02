@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import axios from 'axios';
 
 import CartBar from '../../components/CartBar';
+
+import { useCart } from '../../context/cart';
 
 import formatPrice from '../../utils/formatPrice';
 
@@ -30,19 +31,19 @@ interface Product {
 	description: string;
 	category: string;
 	image: string;
+	quantity: number;
 }
+
 const Cart: React.FC = () => {
-	const [products, setProducts] = useState<Product[]>([]);
+	const { increment, decrement, products } = useCart();
 
-	useEffect(() => {
-		async function loadProducts(): Promise<void> {
-			const response = await axios.get('https://fakestoreapi.com/products');
+	function handleIncrement(id: string): void {
+		increment(id);
+	}
 
-			setProducts(response.data);
-		}
-
-		loadProducts();
-	}, []);
+	function handleDecrement(id: string): void {
+		decrement(id);
+	}
 
 	return (
 		<Container>
@@ -69,7 +70,7 @@ const Cart: React.FC = () => {
 								</ProductSinglePrice>
 
 								<ProductTotalPriceContainer>
-									<ProductQuantity>3 x </ProductQuantity>
+									<ProductQuantity>{item.quantity} x </ProductQuantity>
 									<ProductTotalPrice>
 										{formatPrice(item.price)}
 									</ProductTotalPrice>
@@ -77,11 +78,11 @@ const Cart: React.FC = () => {
 							</ProductInfo>
 
 							<ProductQuantityControl>
-								<ProductChangeQuantity>
+								<ProductChangeQuantity onPress={() => handleIncrement(item.id)}>
 									<FeatherIcon name="plus" size={20} color="#1e90ff" />
 								</ProductChangeQuantity>
 
-								<ProductChangeQuantity>
+								<ProductChangeQuantity onPress={() => handleDecrement(item.id)}>
 									<FeatherIcon name="minus" size={20} color="#1e90ff" />
 								</ProductChangeQuantity>
 							</ProductQuantityControl>

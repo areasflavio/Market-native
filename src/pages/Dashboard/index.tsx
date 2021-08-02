@@ -5,6 +5,8 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import CartBar from '../../components/CartBar';
 
+import { useCart } from '../../context/cart';
+
 import formatPrice from '../../utils/formatPrice';
 
 import {
@@ -29,6 +31,8 @@ interface Product {
 }
 
 const Dashboard: React.FC = () => {
+	const { addToCart } = useCart();
+
 	const [products, setProducts] = useState<Product[]>([]);
 
 	useEffect(() => {
@@ -40,6 +44,10 @@ const Dashboard: React.FC = () => {
 
 		loadProducts();
 	}, []);
+
+	function handleAddToCart(item: Product): void {
+		addToCart(item);
+	}
 
 	return (
 		<Container>
@@ -62,7 +70,7 @@ const Dashboard: React.FC = () => {
 
 							<ProductPrice>
 								<ProductPriceText>{formatPrice(item.price)}</ProductPriceText>
-								<ProductPriceButton>
+								<ProductPriceButton onPress={() => handleAddToCart(item)}>
 									<FeatherIcon name="plus" size={20} color="#8F8F8F" />
 								</ProductPriceButton>
 							</ProductPrice>
